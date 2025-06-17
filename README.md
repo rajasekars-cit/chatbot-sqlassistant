@@ -1,72 +1,120 @@
-# SQL Assistant: Natural Language Database Querying
+# 🧠 SQL Assistant – AI Powered Natural Language Querying for Databases
 
 ## 🚀 Overview
 
-The **SQL Assistant** is an intelligent, AI-powered tool designed to bridge the gap between natural language questions and complex database queries. Say goodbye to writing SQL manually! Simply ask your data-related questions in plain English, and the assistant will effortlessly convert them into precise SQL queries, retrieve the answers, and present them back to you in an understandable, human-readable format.
+**SQL Assistant** is an AI powered Spring Boot application that enables users to interact with relational databases using natural language. Instead of writing complex SQL queries manually, users can simply ask questions in plain English. The assistant automatically generates accurate SQL, executes it, and presents both the raw results and a human-readable explanation.
 
-## ✨ Core Capabilities
+## 🌟 Features
 
-* **Natural Language to SQL Conversion:** Transform your everyday questions into executable SQL queries with ease.
-* **Insightful Result Explanations:** Get clear, natural language interpretations of your query results, making data analysis accessible.
-* **Continuous Improvement (Feedback System):** Help us enhance the assistant's accuracy and capabilities by providing valuable feedback on its responses.
-* **Conversation History:** Maintain and review a complete history of all your past interactions and queries.
-* **Support for Complex Queries:** Capable of understanding and executing intricate database inquiries involving multiple tables.
+- **Natural Language to SQL Conversion**  
+  Seamlessly convert user queries into syntactically correct SQL statements.
 
-## 💡 How to Interact
+- **Human-Friendly Result Interpretation**  
+  Understand your data through clear, natural language explanations of SQL output.
 
-The SQL Assistant provides a straightforward API interface for seamless interaction. Here’s a quick guide on how to use it:
+- **Feedback-Driven Learning**  
+  Submit feedback to improve the assistant’s accuracy over time.
 
-1.  **Initiate a Query:** Send your natural language question to the assistant via the `POST` endpoint:
-    `http://<<host>>/api/assistant/ask`
+- **Conversation History Management**  
+  Track and revisit previous sessions and queries with ease.
 
-    Example Request Body:
+- **Support for Complex Queries**  
+  Handle advanced data inquiries across multiple related tables and conditions.
 
-        ```json
-        {
-            "sessionId": "your-unique-session-id",
-            "question": "What are the top 5 customers by total loan amount?"
-        }
-        ```
+## 📡 API Endpoints
 
-2.  **Review Responses:** Upon successful query, you will receive a comprehensive response including:
-    * The automatically **generated SQL query**.
-    * The **raw results** fetched directly from the database.
-    * A **natural language explanation** of the results.
+Interact with the SQL Assistant using the following RESTful endpoints:
 
-3.  **Provide Feedback:** Your feedback is crucial for the assistant's learning and improvement. Send detailed feedback on any response to:
-    `http://<<host>>/api/assistant/feedback`
+### 1. Ask a Question
 
-    Example Request Body:
+Send a question in natural language and get the generated SQL, results, and explanation.
 
-        ```json
-        {
-            "sessionId": "your-unique-session-id",
-            "timestamp": "timestamp-of-assistant-response",
-            "feedback": "The loan amount was incorrect, it should have filtered by active loans only."
-        }```
+**Endpoint:**
+```
+POST http://<host>/api/assistant/ask
+```
 
-        Please provide as much detail as possible to help us fine-tune its performance.
+**Request Body:**
+```json
+{
+  "sessionId": "your-unique-session-id",
+  "question": "What are the top 5 customers by total loan amount?"
+}
+```
 
-4.  **Get History:** To get the conversation history of a session, call the history endpoint:
-    `http://<<host>>/api/assistant/history?sessionId=your-unique-session-id`
+---
 
-5.  **Clear History:** To start a new conversation or clear a session's history, call the clear endpoint:
-    `http://<<host>>/api/assistant/clear?sessionId=your-unique-session-id`
+### 2. Submit Feedback
 
-## 🗄️ Database Context
+Help improve the assistant by submitting corrections or suggestions.
 
-The SQL Assistant is pre-configured to query a specific database schema that includes information about customers, loans, and related financial data. It leverages its understanding of these tables to generate accurate SQL.
+**Endpoint:**
+```
+POST http://<host>/api/assistant/feedback
+```
 
-* **Query Limits:** By default, all generated queries are automatically limited to **15 rows**, unless a different limit is explicitly specified within your natural language question (e.g., "show me all customers").
+**Request Body:**
+```json
+{
+  "sessionId": "your-unique-session-id",
+  "timestamp": "timestamp-of-assistant-response",
+  "feedback": "The loan amount should include only active loans."
+}
+```
 
-## 🎯 Tips for Effective Querying
+---
 
-* **Be Specific:** Formulate clear and precise questions for the most accurate and relevant results.
-* **Specify Date Ranges:** Feel free to ask for data within specific date ranges (e.g., "Show me sales from January to March 2024").
-* **Handle Complexity:** Don't hesitate to ask complex questions involving multiple tables or conditions.
-* **Leverage Feedback:** Actively use the feedback system to guide the assistant towards better and more accurate responses.
+### 3. Retrieve Session History
 
-## ⚠️ Important Considerations & Limitations
+Get the complete conversation history for a given session.
 
-* **Under Continuous Development:** The SQL Assistant is an evolving tool and may not always provide perfect answers. We rely on your detailed feedback to continuously improve its accuracy and capabilities.
-* **Evolving Database Knowledge:** While the assistant has broad knowledge of the defined schema, its understanding of specific nuances or less-frequently queried tables might still be developing. If you encounter any issues or unexpected results, please utilize the feedback system to help us enhance its database comprehension.
+**Endpoint:**
+```
+GET http://<host>/api/assistant/history?sessionId=your-unique-session-id
+```
+
+---
+
+### 4. Clear Session History
+
+Start fresh by clearing the history of a session.
+
+**Endpoint:**
+```
+POST http://<host>/api/assistant/clear?sessionId=your-unique-session-id
+```
+
+## 🗃️ Database Schema Context
+
+The assistant is designed to work with a predefined schema involving:
+
+- Customers  
+- Loans  
+- EMI payments  
+- Related financial data
+
+It uses this schema knowledge to generate relevant and correct queries.
+
+> **Note:** Queries are limited to **15 rows** by default unless otherwise specified in the user input (e.g., “show all customers”).
+
+## 💡 Best Practices for Effective Use
+
+- **Be Specific**  
+  Ask clear, focused questions for better precision.
+
+- **Include Filters**  
+  Specify date ranges, conditions, or attributes to narrow results.
+
+- **Ask Complex Questions**  
+  Don’t hesitate to query across multiple entities or include joins and filters.
+
+- **Give Feedback**  
+  Use the feedback endpoint regularly to improve future results.
+
+## ⚠️ Limitations
+
+- **Work in Progress**  
+  The assistant is continuously evolving. Some responses may not be accurate initially.
+
+- **Schema-Dependent**  
+  The assistant’s capabilities are bound to the database schema it understands. For best results, ensure queries align with the available structure.
