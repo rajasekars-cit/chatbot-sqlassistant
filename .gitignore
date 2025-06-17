@@ -31,3 +31,5 @@ temp/
 .factorypath
 .settings
 target/
+.env
+.vscode/
