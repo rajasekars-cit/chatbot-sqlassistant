@@ -22,3 +22,12 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# ignore ALL files in ANY directory named temp
+temp/
+.project
+.classpath
+.DS_Store
+.factorypath
+.settings
+target/
