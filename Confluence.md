@@ -10,7 +10,7 @@ Instead of writing SQL manually, users can ask questions in plain English. The s
 
 This POC demonstrates the power of combining AI + databases, making data access easier for both technical and non-technical users.
 
-📌 GitHub Repository: [SQL Assistant GitHub Link](<YOUR_GITHUB_URL>)
+📌 GitHub Repository: [SQL Assistant GitHub Link](https://github.com/rajasekars-cit/chatbot-sqlassistant)
 
 ---
 
@@ -43,33 +43,57 @@ This POC demonstrates the power of combining AI + databases, making data access 
 ## 📡 API Reference
 
 ### 1. Ask a Question  
-Endpoint: POST /api/assistant/ask  
-Request Body:  
+**Endpoint:**
+```
+POST http://<host>/api/assistant/ask
+```
+
+**Request Body:**
+```json
 {
   "sessionId": "unique-session-id",
   "question": "What are the top 5 customers by total loan amount?"
 }
+```
 
 ---
 
 ### 2. Submit Feedback  
-Endpoint: POST /api/assistant/feedback  
-Request Body:  
+Help improve the assistant by submitting corrections or suggestions.
+
+**Endpoint:**
+```
+POST http://<host>/api/assistant/feedback
+```
+
+**Request Body:**
+```json
 {
   "sessionId": "unique-session-id",
   "timestamp": "timestamp-of-response",
   "feedback": "The loan amount should include only active loans."
 }
+```
 
 ---
 
 ### 3. Retrieve Session History  
-Endpoint: GET /api/assistant/history?sessionId=unique-session-id
+Get the complete conversation history for a given session.
+
+**Endpoint:**
+```
+GET http://<host>/api/assistant/history?sessionId=your-unique-session-id
+```
 
 ---
 
 ### 4. Clear Session History  
-Endpoint: POST /api/assistant/clear?sessionId=unique-session-id
+Start fresh by clearing the history of a session.
+
+**Endpoint:**
+```
+POST http://<host>/api/assistant/clear?sessionId=your-unique-session-id
+```
 
 ---
 
